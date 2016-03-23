@@ -50,7 +50,7 @@ app.post('/317a4480-af23-4db7-b16b-050c4a0768e2-backend',function(req,res){
   res.send('ok');
 });
 
-app.post('/deploy/backend',function(req,res){
+app.get('/deploy/backend',function(req,res){
   console.log('----------------------------------------------------------------- manual deploy backend');
   deploy(__dirname + '/deploy-backend.sh', true);
   res.send('ok');
