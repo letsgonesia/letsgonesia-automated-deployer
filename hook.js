@@ -14,9 +14,9 @@ app.get('/',function(req,res){
   res.send("Letsgonesia git webhook");
 });
 
-var deploy = function(script) {
+var deploy = function(script, isManual) {
    
-  var d  = spawn(script);
+  var d  = spawn(script, [isManual]);
   d.stdout.on('data', function (data) {
     console.log('stdout: ' + data);
   });
@@ -31,29 +31,29 @@ var deploy = function(script) {
 app.post('/317a4480-af23-4db7-b16b-050c4a0768e2-frontend',function(req,res){
   console.log('----------------------------------------------------------------- new commit in Frontend');
   if (req.headers['x-gitlab-event'] == 'Push Hook') {
-    console.log('Kill existing instance')
-    var cmd = "pkill -9 -f '/bin/bash " + __dirname + "/deploy-frontend.sh'";
-    exec(cmd, function (err, stdout, stderr) {
-      console.log(err);
-      console.log(stdout);
-      console.log(stderr);
-      deploy(__dirname + '/deploy-frontend.sh');
-    })
+    deploy(__dirname + '/deploy-frontend.sh');
   }
+  res.send('ok');
+});
+
+app.get('/deploy/frontend',function(req,res){
+  console.log('----------------------------------------------------------------- manual deploy frontend');
+  deploy(__dirname + '/deploy-frontend.sh', true);
+  res.send('ok');
 });
 
 app.post('/317a4480-af23-4db7-b16b-050c4a0768e2-backend',function(req,res){
   console.log('----------------------------------------------------------------- new commit in Backend');
   if (req.headers['x-gitlab-event'] == 'Push Hook') {
-    console.log('Kill existing instance')
-    var cmd = "pkill -9 -f '/bin/bash " + __dirname + "/deploy-backend.sh'";
-    exec(cmd, function (err, stdout, stderr) {
-      console.log(err);
-      console.log(stdout);
-      console.log(stderr);
-      deploy(__dirname + '/deploy-backend.sh');
-    })
+    deploy(__dirname + '/deploy-backend.sh');
   }
+  res.send('ok');
+});
+
+app.post('/deploy/backend',function(req,res){
+  console.log('----------------------------------------------------------------- manual deploy backend');
+  deploy(__dirname + '/deploy-backend.sh', true);
+  res.send('ok');
 });
 
 
