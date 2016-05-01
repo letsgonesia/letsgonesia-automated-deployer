@@ -21,6 +21,6 @@ if [ $1 = "false" ]; then
 fi
 npm install
 bower install --allow-root
-fuser -k 80/tcp
-PORT=80 npm run server
+fuser -k 3000/tcp
+NODE_ENV=beta npm run setenv && PORT=3000 MODE=beta npm run server
 

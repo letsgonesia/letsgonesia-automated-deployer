@@ -2,11 +2,12 @@
 . ~/.nvm/nvm.sh
 . ~/.profile
 . ~/.bashrc
+echo "$1"
 nvm use v4
-if [ ! -d "opentrav-backend" ]; then
-  git clone git@gitlab.com:letsgonesia/opentrav-backend.git
-fi
-cd opentrav-backend
+if [ ! -d "opentrav-frontend-staging" ]; then
+  git clone git@gitlab.com:letsgonesia/opentrav-frontend.git
+fi 
+cd opentrav-frontend-staging
 LAST=$(git log -1 --format="%H")
 echo $LAST
 git fetch origin
@@ -20,6 +21,6 @@ if [ $1 = "false" ]; then
 fi
 npm install
 bower install --allow-root
-fuser -k 3001/tcp
-NODE_ENV=beta npm run setenv && MODE=beta PORT=3001 npm run server
+fuser -k 4000/tcp
+NODE_ENV=staging npm run setenv && PORT=4000 MODE=staging npm run server
 

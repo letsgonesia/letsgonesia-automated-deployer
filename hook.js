@@ -28,35 +28,49 @@ var deploy = function(script, isManual) {
   });
 }
 
-app.post('/317a4480-af23-4db7-b16b-050c4a0768e2-frontend',function(req,res){
-  console.log('----------------------------------------------------------------- new commit in Frontend');
+app.post('/317a4480-af23-4db7-b16b-050c4a0768e2-frontend-staging',function(req,res){
+  console.log('----------------------------------------------------------------- New commit in Frontend Staging');
   if (req.headers['x-gitlab-event'] == 'Push Hook') {
-    deploy(__dirname + '/deploy-frontend.sh');
+    deploy(__dirname + '/deploy-frontend-staging.sh');
   }
-  res.send('ok');
+  res.send('Please wait a bit. We are deploying the code just for you...');
+});
+app.get('/317a4480-af23-4db7-b16b-050c4a0768e2-frontend-staging',function(req,res){
+  console.log('----------------------------------------------------------------- Manual deploy in Frontend Staging');
+  if (req.headers['x-gitlab-event'] == 'Push Hook') {
+    deploy(__dirname + '/deploy-frontend-staging.sh');
+  }
+  res.send('Please wait a bit. We are deploying the code just for you...');
 });
 
-app.get('/deploy/frontend',function(req,res){
-  console.log('----------------------------------------------------------------- manual deploy frontend');
+app.get('/317a4480-af23-4db7-b16b-050c4a0768e2-frontend-beta',function(req,res){
+  console.log('----------------------------------------------------------------- Manual deploy in Frontend Beta');
   deploy(__dirname + '/deploy-frontend.sh', true);
-  res.send('ok');
+  res.send('Please wait a bit. We are deploying the code just for you...');
 });
 
-app.post('/317a4480-af23-4db7-b16b-050c4a0768e2-backend',function(req,res){
-  console.log('----------------------------------------------------------------- new commit in Backend');
+app.post('/317a4480-af23-4db7-b16b-050c4a0768e2-backend-staging',function(req,res){
+  console.log('----------------------------------------------------------------- New commit in Backend Staging');
   if (req.headers['x-gitlab-event'] == 'Push Hook') {
-    deploy(__dirname + '/deploy-backend.sh');
+    deploy(__dirname + '/deploy-backend-staging.sh');
   }
-  res.send('ok');
+  res.send('Please wait a bit. We are deploying the code just for you...');
+});
+app.get('/317a4480-af23-4db7-b16b-050c4a0768e2-backend-staging',function(req,res){
+  console.log('----------------------------------------------------------------- Manual deploy in Backend Staging');
+  if (req.headers['x-gitlab-event'] == 'Push Hook') {
+    deploy(__dirname + '/deploy-backend-staging.sh');
+  }
+  res.send('Please wait a bit. We are deploying the code just for you...');
 });
 
-app.get('/deploy/backend',function(req,res){
-  console.log('----------------------------------------------------------------- manual deploy backend');
+app.get('/317a4480-af23-4db7-b16b-050c4a0768e2-backend-beta',function(req,res){
+  console.log('----------------------------------------------------------------- Manual deploy in Backend Beta');
   deploy(__dirname + '/deploy-backend.sh', true);
-  res.send('ok');
+  res.send('Please wait a bit. We are deploying the code just for you...');
 });
 
 
-app.listen(8002,function(){
-  console.log("Started on PORT 8002");
+app.listen(8000,function(){
+  console.log("Started on PORT 8000");
 })
